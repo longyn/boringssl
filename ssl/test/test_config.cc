@@ -153,6 +153,8 @@ const Flag<bool> kBoolFlags[] = {
      &TestConfig::expect_delegated_credential_used},
     {"-enable-pq-experiment-signal", &TestConfig::enable_pq_experiment_signal},
     {"-expect-pq-experiment-signal", &TestConfig::expect_pq_experiment_signal},
+    {"-expect-hrr", &TestConfig::expect_hrr},
+    {"-expect-no-hrr", &TestConfig::expect_no_hrr},
 };
 
 const Flag<std::string> kStringFlags[] = {
@@ -1361,7 +1363,7 @@ static unsigned PskClientCallback(SSL *ssl, const char *hint,
     return 0;
   }
 
-  BUF_strlcpy(out_identity, config->psk_identity.c_str(), max_identity_len);
+  OPENSSL_strlcpy(out_identity, config->psk_identity.c_str(), max_identity_len);
   OPENSSL_memcpy(out_psk, config->psk.data(), config->psk.size());
   return config->psk.size();
 }
